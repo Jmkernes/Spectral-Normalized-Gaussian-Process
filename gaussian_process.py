@@ -407,8 +407,8 @@ class LaplaceRandomFeatureCovariance(nn.Module):
         # Update the non-batch (i.e. all data) precision matrix.
         if self.momentum > 0:
             batch_precision = batch_precision / batch_size
-            self.precision = (
-                    self.momentum * self.precision
+            self.precision += (
+                    (self.momentum - 1) * self.precision
                     + (1-self.momentum) * batch_precision.to(self.device)
                 )
         else:
